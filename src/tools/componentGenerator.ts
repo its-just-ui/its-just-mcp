@@ -1,4 +1,5 @@
 import { componentRegistry } from '../components/registry.js';
+import { validateProps } from '../utils/validation.js';
 
 export function generateComponent(
   componentName: string,
@@ -12,7 +13,8 @@ export function generateComponent(
     throw new Error(`Component "${componentName}" not found in registry`);
   }
 
-  const propsString = formatProps(props, className);
+  const sanitizedProps = validateProps(props);
+  const propsString = formatProps(sanitizedProps, className);
   const childrenContent = children || '';
 
   if (childrenContent) {
