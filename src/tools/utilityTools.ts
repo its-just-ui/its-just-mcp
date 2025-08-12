@@ -10,29 +10,29 @@ export interface FormField {
 export const utilityTools = {
   generateTailwindClasses(type: string, values?: Record<string, any>): string {
     switch (type) {
-      case 'spacing':
+      case "spacing":
         return this.generateSpacingClasses(values);
-      case 'colors':
+      case "colors":
         return this.generateColorClasses(values);
-      case 'typography':
+      case "typography":
         return this.generateTypographyClasses(values);
-      case 'layout':
+      case "layout":
         return this.generateLayoutClasses(values);
-      case 'effects':
+      case "effects":
         return this.generateEffectClasses(values);
       default:
-        return '// Unknown type';
+        return "// Unknown type";
     }
   },
 
   generateSpacingClasses(_values?: Record<string, any>): string {
     const defaults = {
-      padding: 'p-4',
-      margin: 'm-2',
-      gap: 'gap-4',
+      padding: "p-4",
+      margin: "m-2",
+      gap: "gap-4",
     };
     const config = { ...defaults, ..._values };
-    
+
     return `// Spacing utility classes
 const spacingClasses = {
   // Padding
@@ -285,9 +285,12 @@ const cardEffect = 'rounded-lg shadow-md hover:shadow-lg transition-shadow durat
 const buttonEffect = 'rounded-md shadow-sm hover:shadow-md transition-all duration-150';`;
   },
 
-  createResponsiveLayout(config: { type: string; breakpoints?: Record<string, string> }): string {
+  createResponsiveLayout(config: {
+    type: string;
+    breakpoints?: Record<string, string>;
+  }): string {
     const { type } = config;
-    
+
     const layouts: Record<string, string> = {
       grid: `// Responsive Grid Layout
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
@@ -296,7 +299,7 @@ const buttonEffect = 'rounded-md shadow-sm hover:shadow-md transition-all durati
   <Card>Item 3</Card>
   <Card>Item 4</Card>
 </div>`,
-      
+
       flexbox: `// Responsive Flexbox Layout
 <div className="flex flex-col md:flex-row gap-4 p-4">
   <div className="flex-1">
@@ -309,7 +312,7 @@ const buttonEffect = 'rounded-md shadow-sm hover:shadow-md transition-all durati
     <Card>Flex Item 3</Card>
   </div>
 </div>`,
-      
+
       container: `// Responsive Container Layout
 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
   <div className="max-w-7xl mx-auto">
@@ -321,7 +324,7 @@ const buttonEffect = 'rounded-md shadow-sm hover:shadow-md transition-all durati
     </div>
   </div>
 </div>`,
-      
+
       sidebar: `// Responsive Sidebar Layout
 <div className="flex flex-col md:flex-row min-h-screen">
   {/* Sidebar */}
@@ -340,7 +343,7 @@ const buttonEffect = 'rounded-md shadow-sm hover:shadow-md transition-all durati
     {/* Content */}
   </main>
 </div>`,
-      
+
       hero: `// Responsive Hero Section
 <section className="relative bg-gradient-to-r from-blue-500 to-purple-600 text-white">
   <div className="container mx-auto px-4 py-16 md:py-24 lg:py-32">
@@ -358,8 +361,8 @@ const buttonEffect = 'rounded-md shadow-sm hover:shadow-md transition-all durati
     </div>
   </div>
 </section>`,
-      
-      'card-grid': `// Responsive Card Grid
+
+      "card-grid": `// Responsive Card Grid
 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 p-4">
   {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
     <Card key={item} variant="elevated" className="hover:shadow-xl transition-shadow">
@@ -375,89 +378,96 @@ const buttonEffect = 'rounded-md shadow-sm hover:shadow-md transition-all durati
     return layouts[type] || layouts.container;
   },
 
-  createForm(fields: FormField[], layout?: string, includeValidation?: boolean): string {
-    const layoutClass = layout === 'two-column' 
-      ? 'grid grid-cols-1 md:grid-cols-2 gap-4' 
-      : layout === 'inline'
-      ? 'flex flex-wrap gap-4'
-      : 'space-y-4';
+  createForm(
+    fields: FormField[],
+    layout?: string,
+    includeValidation?: boolean,
+  ): string {
+    const layoutClass =
+      layout === "two-column"
+        ? "grid grid-cols-1 md:grid-cols-2 gap-4"
+        : layout === "inline"
+          ? "flex flex-wrap gap-4"
+          : "space-y-4";
 
-    const formFields = fields.map(field => {
-      switch (field.type) {
-        case 'text':
-        case 'email':
-        case 'password':
-        case 'number':
-          return `    <Input
+    const formFields = fields
+      .map((field) => {
+        switch (field.type) {
+          case "text":
+          case "email":
+          case "password":
+          case "number":
+            return `    <Input
       label="${field.label}"
       name="${field.name}"
       type="${field.type}"
       placeholder="${field.placeholder || `Enter ${field.label.toLowerCase()}`}"
-      ${field.required ? 'required' : ''}
+      ${field.required ? "required" : ""}
     />`;
-        
-        case 'select':
-          return `    <Select
-      label="${field.label}"
-      name="${field.name}"
-      options={${field.options ? JSON.stringify(field.options) : '[]'}}
-      placeholder="${field.placeholder || `Select ${field.label.toLowerCase()}`}"
-      ${field.required ? 'required' : ''}
-    />`;
-        
-        case 'checkbox':
-          return `    <Checkbox
-      label="${field.label}"
-      name="${field.name}"
-    />`;
-        
-        case 'radio':
-          return `    <RadioGroup
-      label="${field.label}"
-      name="${field.name}"
-      options={${field.options ? JSON.stringify(field.options) : '[]'}}
-      ${field.required ? 'required' : ''}
-    />`;
-        
-        case 'date':
-          return `    <DatePicker
-      label="${field.label}"
-      name="${field.name}"
-      placeholder="${field.placeholder || 'Select date'}"
-      ${field.required ? 'required' : ''}
-    />`;
-        
-        case 'color':
-          return `    <ColorPicker
-      label="${field.label}"
-      name="${field.name}"
-    />`;
-        
-        case 'file':
-          return `    <Upload
-      label="${field.label}"
-      name="${field.name}"
-      ${field.required ? 'required' : ''}
-    />`;
-        
-        default:
-          return `    <Input
-      label="${field.label}"
-      name="${field.name}"
-      ${field.required ? 'required' : ''}
-    />`;
-      }
-    }).join('\n\n');
 
-    let formCode = `import { ${this.getRequiredComponents(fields).join(', ')} } from 'its-just-ui';
-${includeValidation ? "import { useState } from 'react';" : ''}
+          case "select":
+            return `    <Select
+      label="${field.label}"
+      name="${field.name}"
+      options={${field.options ? JSON.stringify(field.options) : "[]"}}
+      placeholder="${field.placeholder || `Select ${field.label.toLowerCase()}`}"
+      ${field.required ? "required" : ""}
+    />`;
+
+          case "checkbox":
+            return `    <Checkbox
+      label="${field.label}"
+      name="${field.name}"
+    />`;
+
+          case "radio":
+            return `    <RadioGroup
+      label="${field.label}"
+      name="${field.name}"
+      options={${field.options ? JSON.stringify(field.options) : "[]"}}
+      ${field.required ? "required" : ""}
+    />`;
+
+          case "date":
+            return `    <DatePicker
+      label="${field.label}"
+      name="${field.name}"
+      placeholder="${field.placeholder || "Select date"}"
+      ${field.required ? "required" : ""}
+    />`;
+
+          case "color":
+            return `    <ColorPicker
+      label="${field.label}"
+      name="${field.name}"
+    />`;
+
+          case "file":
+            return `    <Upload
+      label="${field.label}"
+      name="${field.name}"
+      ${field.required ? "required" : ""}
+    />`;
+
+          default:
+            return `    <Input
+      label="${field.label}"
+      name="${field.name}"
+      ${field.required ? "required" : ""}
+    />`;
+        }
+      })
+      .join("\n\n");
+
+    let formCode = `import { ${this.getRequiredComponents(fields).join(", ")} } from 'its-just-ui';
+${includeValidation ? "import { useState } from 'react';" : ""}
 
 export default function CustomForm() {
-  ${includeValidation ? this.generateValidationState(fields) : ''}
+  ${includeValidation ? this.generateValidationState(fields) : ""}
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    ${includeValidation ? this.generateValidationLogic(fields) : '// Handle form submission'}
+    ${includeValidation ? this.generateValidationLogic(fields) : "// Handle form submission"}
   };
 
   return (
@@ -482,45 +492,48 @@ ${formFields}
   },
 
   getRequiredComponents(fields: FormField[]): string[] {
-    const components = new Set(['Button']);
-    
-    fields.forEach(field => {
+    const components = new Set(["Button"]);
+
+    fields.forEach((field) => {
       switch (field.type) {
-        case 'text':
-        case 'email':
-        case 'password':
-        case 'number':
-          components.add('Input');
+        case "text":
+        case "email":
+        case "password":
+        case "number":
+          components.add("Input");
           break;
-        case 'select':
-          components.add('Select');
+        case "select":
+          components.add("Select");
           break;
-        case 'checkbox':
-          components.add('Checkbox');
+        case "checkbox":
+          components.add("Checkbox");
           break;
-        case 'radio':
-          components.add('RadioGroup');
+        case "radio":
+          components.add("RadioGroup");
           break;
-        case 'date':
-          components.add('DatePicker');
+        case "date":
+          components.add("DatePicker");
           break;
-        case 'color':
-          components.add('ColorPicker');
+        case "color":
+          components.add("ColorPicker");
           break;
-        case 'file':
-          components.add('Upload');
+        case "file":
+          components.add("Upload");
           break;
       }
     });
-    
+
     return Array.from(components).sort();
   },
 
   generateValidationState(fields: FormField[]): string {
-    const stateFields = fields.map(field => 
-      `  const [${field.name}, set${field.name.charAt(0).toUpperCase() + field.name.slice(1)}] = useState('');`
-    ).join('\n');
-    
+    const stateFields = fields
+      .map(
+        (field) =>
+          `  const [${field.name}, set${field.name.charAt(0).toUpperCase() + field.name.slice(1)}] = useState('');`,
+      )
+      .join("\n");
+
     return `${stateFields}
   const [errors, setErrors] = useState<Record<string, string>>({});`;
   },
@@ -528,10 +541,15 @@ ${formFields}
   generateValidationLogic(fields: FormField[]): string {
     return `    const newErrors: Record<string, string> = {};
     
-    ${fields.filter(f => f.required).map(field => `
+    ${fields
+      .filter((f) => f.required)
+      .map(
+        (field) => `
     if (!${field.name}) {
       newErrors.${field.name} = '${field.label} is required';
-    }`).join('')}
+    }`,
+      )
+      .join("")}
     
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -539,6 +557,6 @@ ${formFields}
     }
     
     // Form is valid, proceed with submission
-    console.log('Form submitted:', { ${fields.map(f => f.name).join(', ')} });`;
-  }
+    console.log('Form submitted:', { ${fields.map((f) => f.name).join(", ")} });`;
+  },
 };

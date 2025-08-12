@@ -1,5 +1,5 @@
 export interface ThemeConfig {
-  mode?: 'light' | 'dark' | 'system';
+  mode?: "light" | "dark" | "system";
   colors?: {
     primary?: string;
     secondary?: string;
@@ -15,7 +15,7 @@ export interface ThemeConfig {
 export const themeTools = {
   configureTheme(config: ThemeConfig): string {
     const { mode, colors, borderRadius, fontFamily } = config;
-    
+
     let themeCode = `import { ThemeProvider } from 'its-just-ui';
 import 'its-just-ui/styles.css';
 
@@ -24,10 +24,11 @@ const customTheme = {`;
     if (colors) {
       themeCode += `
   colors: {${Object.entries(colors)
-    .map(([key, value]) => `
-    ${key}: '${value}'`)
-    .join(',')
-  }
+    .map(
+      ([key, value]) => `
+    ${key}: '${value}'`,
+    )
+    .join(",")}
   },`;
     }
 
@@ -46,7 +47,7 @@ const customTheme = {`;
 
 export default function App() {
   return (
-    <ThemeProvider ${mode ? `mode="${mode}"` : ''} theme={customTheme}>
+    <ThemeProvider ${mode ? `mode="${mode}"` : ""} theme={customTheme}>
       {/* Your app content */}
     </ThemeProvider>
   );
@@ -198,5 +199,5 @@ const responsiveTheme = {
     {/* Responsive grid layout */}
   </div>
 </div>`;
-  }
+  },
 };

@@ -1,25 +1,25 @@
-import { componentRegistry } from '../components/registry.js';
+import { componentRegistry } from "../components/registry.js";
 
 export const documentationTools = {
   getComponentDocs(componentName: string, section?: string): string {
     const component = componentRegistry.getComponent(componentName);
-    
+
     if (!component) {
-      return `Component "${componentName}" not found. Available components: ${
-        Object.keys(componentRegistry.listComponents('all')).join(', ')
-      }`;
+      return `Component "${componentName}" not found. Available components: ${Object.keys(
+        componentRegistry.listComponents("all"),
+      ).join(", ")}`;
     }
 
-    if (!section || section === 'usage') {
+    if (!section || section === "usage") {
       return this.getUsageDoc(component);
     }
 
     switch (section) {
-      case 'props':
+      case "props":
         return this.getPropsDoc(component);
-      case 'examples':
+      case "examples":
         return this.getExamplesDoc(component);
-      case 'accessibility':
+      case "accessibility":
         return this.getAccessibilityDoc(component);
       default:
         return this.getUsageDoc(component);
@@ -47,7 +47,7 @@ function MyComponent() {
 ${component.category}
 
 ## Key Features
-- ${component.accessibility.join('\n- ')}
+- ${component.accessibility.join("\n- ")}
 
 ## Installation
 \`\`\`bash
@@ -64,10 +64,12 @@ import 'its-just-ui/styles.css';
   getPropsDoc(component: any): string {
     const propsTable = Object.entries(component.props)
       .map(([name, prop]: [string, any]) => {
-        const options = prop.options ? `\`${prop.options.join('` | `')}\`` : '-';
-        return `| ${name} | \`${prop.type}\` | ${prop.required ? 'Yes' : 'No'} | ${prop.default !== undefined ? `\`${prop.default}\`` : '-'} | ${prop.description} | ${options} |`;
+        const options = prop.options
+          ? `\`${prop.options.join("` | `")}\``
+          : "-";
+        return `| ${name} | \`${prop.type}\` | ${prop.required ? "Yes" : "No"} | ${prop.default !== undefined ? `\`${prop.default}\`` : "-"} | ${prop.description} | ${options} |`;
       })
-      .join('\n');
+      .join("\n");
 
     return `# ${component.name} Props
 
@@ -82,15 +84,15 @@ ${propsTable}
 interface ${component.name}Props {
 ${Object.entries(component.props)
   .map(([name, prop]: [string, any]) => {
-    const optionalMark = prop.required ? '' : '?';
-    const typeStr = prop.options 
+    const optionalMark = prop.required ? "" : "?";
+    const typeStr = prop.options
       ? `'${prop.options.join("' | '")}'`
-      : prop.type === 'function' 
-      ? '() => void'
-      : prop.type;
+      : prop.type === "function"
+        ? "() => void"
+        : prop.type;
     return `  ${name}${optionalMark}: ${typeStr};`;
   })
-  .join('\n')}
+  .join("\n")}
 }
 \`\`\`
 
@@ -114,12 +116,14 @@ ${Object.entries(component.props)
   },
 
   getExamplesDoc(component: any): string {
-    const examples = component.examples.map((example: string, index: number) => {
-      return `### Example ${index + 1}
+    const examples = component.examples
+      .map((example: string, index: number) => {
+        return `### Example ${index + 1}
 \`\`\`jsx
 ${example}
 \`\`\``;
-    }).join('\n\n');
+      })
+      .join("\n\n");
 
     return `# ${component.name} Examples
 
@@ -195,9 +199,13 @@ function ThemedExample() {
 
 ## Accessibility Features
 
-${component.accessibility.map((feature: string) => `### ${feature}
+${component.accessibility
+  .map(
+    (feature: string) => `### ${feature}
 - Fully implemented and tested
-- Complies with WCAG 2.1 Level AA standards`).join('\n\n')}
+- Complies with WCAG 2.1 Level AA standards`,
+  )
+  .join("\n\n")}
 
 ## ARIA Attributes
 
@@ -269,7 +277,7 @@ test('${component.name} is accessible', () => {
 
   checkAccessibility(componentName: string): string {
     const component = componentRegistry.getComponent(componentName);
-    
+
     if (!component) {
       return `Component "${componentName}" not found.`;
     }
@@ -277,7 +285,7 @@ test('${component.name} is accessible', () => {
     return `# ${component.name} Accessibility Check
 
 ## ✅ Accessibility Features
-${component.accessibility.map((feature: string) => `- ✓ ${feature}`).join('\n')}
+${component.accessibility.map((feature: string) => `- ✓ ${feature}`).join("\n")}
 
 ## Component Accessibility Score: A+
 
@@ -331,5 +339,5 @@ npm run test:a11y
   Additional help text for screen readers
 </span>
 \`\`\``;
-  }
+  },
 };
