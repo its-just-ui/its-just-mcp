@@ -7,13 +7,20 @@ yarn-error.log*
 # Build output
 dist/
 build/
-*.js
-*.js.map
-*.d.ts
-*.d.ts.map
+# Ignore JS artifacts in src only; allow root configs
+src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts
+src/**/*.d.ts.map
 
 # Keep TypeScript source files
 !src/**/*.ts
+
+# Allow root configs
+!eslint.config.js
+!jest.config.js
+!commitlint.config.cjs
+!*.config.js
 
 # IDE
 .vscode/
