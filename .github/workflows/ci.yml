@@ -1,8 +1,6 @@
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
@@ -44,49 +42,3 @@ jobs:
     
     - name: Build
       run: npm run build
-
-  publish-npm:
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release'
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-        registry-url: 'https://registry.npmjs.org'
-    
-    - run: npm ci
-    
-    - run: npm run build
-    
-    - run: npm publish --access public
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  publish-github:
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release'
-    permissions:
-      contents: read
-      packages: write
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-        registry-url: 'https://npm.pkg.github.com'
-        scope: '@${{ github.repository_owner }}'
-    
-    - run: npm ci
-    
-    - run: npm run build
-    
-    - run: npm publish
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
