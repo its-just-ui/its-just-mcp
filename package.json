@@ -1,0 +1,85 @@
+{
+  "name": "@mcp-servers/its-just-ui",
+  "version": "1.0.0",
+  "description": "MCP server for its-just-ui React component library - Generate, customize, and document UI components with AI",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "mcp-its-just-ui": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "examples.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write 'src/**/*.ts'",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint && npm run build",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "its-just-ui",
+    "react",
+    "ui-components",
+    "ai",
+    "claude",
+    "anthropic",
+    "tailwind",
+    "typescript"
+  ],
+  "author": "its-just-ui",
+  "license": "MIT",
+  "homepage": "https://github.com/its-just-ui/its-just-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/its-just-ui/its-just-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/its-just-ui/its-just-mcp/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/jest": "^29.5.14",
+    "@typescript-eslint/eslint-plugin": "^8.19.0",
+    "@typescript-eslint/parser": "^8.19.0",
+    "eslint": "^9.17.0",
+    "jest": "^29.7.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "prettier": "^3.4.2",
+    "ts-jest": "^29.2.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "postinstall": "husky install"
+}

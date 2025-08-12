@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mcp-its-just-ui:
+    build: .
+    image: mcp-its-just-ui:latest
+    container_name: mcp-its-just-ui-server
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=info
+    volumes:
+      - ./config:/app/config:ro
+    networks:
+      - mcp-network
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "traefik.enable=true"
+      - "traefik.http.routers.mcp-ui.rule=Host(`mcp-ui.localhost`)"
+      - "traefik.http.services.mcp-ui.loadbalancer.server.port=3000"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  mcp-network:
+    driver: bridge

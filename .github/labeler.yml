@@ -1,0 +1,29 @@
+area:docs:
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.md']
+
+area:codegen:
+  - changed-files:
+      - any-glob-to-any-file: ['src/tools/**']
+
+area:registry:
+  - changed-files:
+      - any-glob-to-any-file: ['src/components/**']
+
+area:infra:
+  - changed-files:
+      - any-glob-to-any-file: ['.github/**', 'tsconfig.json', 'package.json', 'jest.config.js']
+
+area:tests:
+  - changed-files:
+      - any-glob-to-any-file: ['src/__tests__/**', '**/*.test.*']
+
+type:bug:
+  - head-branch: ['fix/*', 'bugfix/*', 'hotfix/*']
+
+type:feature:
+  - head-branch: ['feat/*', 'feature/*']
+
+type:chore:
+  - head-branch: ['chore/*', 'ci/*', 'docs/*', 'refactor/*']
+
