@@ -43,7 +43,7 @@ tmp/
 temp/
 *.tmp
 
-# Package manager
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
+# Package manager (commit lockfiles for reproducible CI installs)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
