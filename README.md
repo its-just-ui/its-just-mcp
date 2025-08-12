@@ -1,7 +1,7 @@
 # MCP its-just-ui Server
 
-[![npm version](https://img.shields.io/npm/v/%40mcp-servers/its-just-ui?color=blue)](https://www.npmjs.com/package/@mcp-servers/its-just-ui)
-[![npm downloads](https://img.shields.io/npm/dm/%40mcp-servers/its-just-ui.svg)](https://www.npmjs.com/package/@mcp-servers/its-just-ui)
+[![npm version](https://img.shields.io/npm/v/its-just-mcp?color=blue)](https://www.npmjs.com/package/its-just-mcp)
+[![npm downloads](https://img.shields.io/npm/dm/its-just-mcp.svg)](https://www.npmjs.com/package/its-just-mcp)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node-%3E%3D18-339933.svg?logo=node.js&logoColor=white)](package.json)
 [![typescript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](tsconfig.json)
@@ -63,7 +63,7 @@ If you publish this package, you can configure Cursor with `npx`:
   "mcpServers": {
     "its-just-ui": {
       "command": "npx",
-      "args": ["-y", "@mcp-servers/its-just-ui"]
+      "args": ["-y", "its-just-mcp"]
     }
   }
 }
