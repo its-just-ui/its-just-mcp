@@ -25,8 +25,8 @@ A Model Context Protocol (MCP) server for the its-just-ui React component librar
 
 ```bash
 # 1) Clone and install
-git clone https://github.com/yourusername/mcp-its-just-ui-server.git
-cd mcp-its-just-ui-server
+git clone https://github.com/its-just-ui/its-just-mcp.git
+cd its-just-mcp
 npm install
 
 # 2) Build
@@ -47,7 +47,7 @@ Project-level configuration (recommended): create `.cursor/mcp.json` in your pro
   "mcpServers": {
     "its-just-ui": {
       "command": "node",
-      "args": ["/absolute/path/to/mcp-its-just-ui-server/dist/index.js"],
+      "args": ["/absolute/path/to/its-just-mcp/dist/index.js"],
       "env": {}
     }
   }
@@ -102,8 +102,8 @@ Resources:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/mcp-its-just-ui-server.git
-cd mcp-its-just-ui-server
+git clone https://github.com/its-just-ui/its-just-mcp.git
+cd its-just-mcp
 
 # Install dependencies
 npm install
@@ -139,7 +139,7 @@ Add the following to your Claude Desktop configuration file:
   "mcpServers": {
     "its-just-ui": {
       "command": "node",
-      "args": ["/path/to/mcp-its-just-ui-server/dist/index.js"],
+      "args": ["/path/to/its-just-mcp/dist/index.js"],
       "env": {}
     }
   }
@@ -415,7 +415,7 @@ npm run test:coverage
 ## Project Structure
 
 ```
-mcp-its-just-ui-server/
+its-just-mcp/
 ├── src/
 │   ├── index.ts              # Main server entry point
 │   ├── components/
@@ -451,7 +451,7 @@ For issues or questions, please open an issue on GitHub or contact the maintaine
 
 ## Related Links
 
-- [its-just-ui Library](https://github.com/its-just-ui/just-ui)
+- [its-just-ui Library](https://github.com/its-just-ui/its-just-ui)
 - [its-just-ui on npm](https://www.npmjs.com/package/its-just-ui)
 - [MCP SDK Documentation](https://modelcontextprotocol.io)
 - [Claude Desktop](https://claude.ai)
