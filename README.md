@@ -1,46 +1,81 @@
-# MCP its-just-ui Server
+# MCP its-just-ui Server for Cursor
 
 [![npm version](https://img.shields.io/npm/v/its-just-mcp?color=blue)](https://www.npmjs.com/package/its-just-mcp)
 [![npm downloads](https://img.shields.io/npm/dm/its-just-mcp.svg)](https://www.npmjs.com/package/its-just-mcp)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![node](https://img.shields.io/badge/node-%3E%3D18-339933.svg?logo=node.js&logoColor=white)](package.json)
-[![typescript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](tsconfig.json)
+[![Cursor Compatible](https://img.shields.io/badge/Cursor-Compatible-5C6EF8?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMyA3VjE3TDEyIDIyTDIxIDE3VjdMMTIgMloiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPg==)](https://www.cursor.com)
 [![MCP SDK](https://img.shields.io/badge/MCP%20SDK-1.x-7A7AFF)](https://modelcontextprotocol.io)
 
-A Model Context Protocol (MCP) server for the its-just-ui React component library. This server provides AI-powered tools to generate, customize, and document its-just-ui components.
+A Model Context Protocol (MCP) server optimized for **Cursor IDE**, enabling AI-powered generation, customization, and documentation of its-just-ui React components directly in your editor.
+
+### 🎯 Why Use This in Cursor?
+- **Native MCP Support**: Cursor has built-in support for MCP servers via stdio
+- **AI-Powered Component Generation**: Generate complete its-just-ui components with a simple prompt
+- **Contextual Awareness**: The AI understands your project structure and existing code
+- **Zero Configuration**: Works out of the box with minimal setup
 
 ### Table of Contents
-- **Overview**
-- **Quick Start**
-- **Use in Cursor**
-- **Use in Claude Desktop**
-- **Available Tools**
-- **Usage Examples**
+- **🚀 Quick Start for Cursor**
+- **⚙️ Cursor Configuration**
+- **🛠️ Available Tools in Cursor**
+- **💡 Cursor Usage Examples**
+- **📚 Alternative: Claude Desktop**
 - **Development**
 - **Troubleshooting**
-- **Contributing**
 - **License**
 
-## Quick Start
+## 🚀 Quick Start for Cursor
 
+### Option 1: NPM Package (Recommended)
 ```bash
-# 1) Clone and install
-git clone https://github.com/its-just-ui/its-just-mcp.git
-cd its-just-mcp
-npm install
-
-# 2) Build
-npm run build
-
-# 3) (Optional) Run in dev mode
-npm run dev
+# Simply add to your Cursor config - no installation needed!
+# Cursor will handle everything via npx
 ```
 
-## Use in Cursor
+### Option 2: Local Development
+```bash
+# Clone and build
+git clone https://github.com/its-just-ui/its-just-mcp.git
+cd its-just-mcp
+npm install && npm run build
+```
 
-Cursor supports MCP servers via stdio and SSE. This server uses stdio, so no code changes are needed.
+## ⚙️ Cursor Configuration
 
-Project-level configuration (recommended): create `.cursor/mcp.json` in your project root.
+### Step 1: Create MCP Configuration
+
+#### Project-Level (Recommended)
+Create `.cursor/mcp.json` in your React project root:
+
+```json
+{
+  "mcpServers": {
+    "its-just-ui": {
+      "command": "npx",
+      "args": ["-y", "its-just-mcp"],
+      "env": {}
+    }
+  }
+}
+```
+
+#### Global Configuration (All Projects)
+Create `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "its-just-ui": {
+      "command": "npx",
+      "args": ["-y", "its-just-mcp"],
+      "env": {}
+    }
+  }
+}
+```
+
+#### Local Development Setup
+If you're developing the MCP server locally:
 
 ```json
 {
@@ -54,320 +89,136 @@ Project-level configuration (recommended): create `.cursor/mcp.json` in your pro
 }
 ```
 
-Global configuration: create `~/.cursor/mcp.json` to make the server available across all workspaces.
+### Step 2: Restart Cursor
+After adding the configuration, restart Cursor to load the MCP server.
 
-If you publish this package, you can configure Cursor with `npx`:
+### Step 3: Verify Installation
+In Cursor, you can ask the AI:
+- "What MCP tools are available?"
+- "Generate a Button component using its-just-ui"
 
-```json
-{
-  "mcpServers": {
-    "its-just-ui": {
-      "command": "npx",
-      "args": ["-y", "its-just-mcp"]
+## 🎨 Cursor-Specific Features
+
+### Inline Component Generation
+Ask Cursor AI to generate components directly in your code:
+```
+"Add a primary button with loading state here"
+"Create a card grid layout with 3 columns"
+"Generate a login form with validation"
+```
+
+### Context-Aware Suggestions
+The MCP server understands your project context:
+- Existing theme configuration
+- Component usage patterns
+- Project structure
+
+### Quick Commands in Cursor
+- **Generate**: `⌘+K` → "Generate [component] with [props]"
+- **Document**: `⌘+K` → "Document this its-just-ui component"
+- **Theme**: `⌘+K` → "Configure dark theme for its-just-ui"
+- **Form**: `⌘+K` → "Create a contact form with validation"
+
+## 🛠️ Available Tools in Cursor
+
+### Component Generation
+| Tool | Cursor Command Example | Description |
+|------|------------------------|-------------|
+| `generate_component` | "Generate a primary button" | Create any its-just-ui component |
+| `list_components` | "Show me all form components" | Browse available components |
+| `compose_components` | "Create a card grid layout" | Compose multiple components |
+
+### Theme & Styling
+| Tool | Cursor Command Example | Description |
+|------|------------------------|-------------|
+| `configure_theme` | "Set up dark mode theme" | Configure ThemeProvider |
+| `generate_tailwind_classes` | "Generate spacing utilities" | Create Tailwind utility classes |
+| `create_responsive_layout` | "Make a responsive grid" | Build responsive layouts |
+
+### Forms & Documentation
+| Tool | Cursor Command Example | Description |
+|------|------------------------|-------------|
+| `create_form` | "Build a contact form" | Generate complete forms |
+| `get_component_docs` | "Show Button documentation" | Get component docs |
+| `check_accessibility` | "Check Dialog accessibility" | Review ARIA attributes |
+
+## 💡 Cursor Usage Examples
+
+### Example 1: Generate a Component
+In Cursor, simply type `⌘+K` and ask:
+```
+"Generate a primary button with loading state"
+```
+
+The AI will use the MCP server to generate:
+```jsx
+<Button variant="primary" loading={true}>
+  Processing...
+</Button>
+```
+
+### Example 2: Create a Complete Form
+```
+"Create a login form with email and password validation"
+```
+
+Result:
+```jsx
+<form onSubmit={handleSubmit}>
+  <Input
+    type="email"
+    name="email"
+    label="Email"
+    required
+    placeholder="Enter your email"
+  />
+  <Input
+    type="password"
+    name="password"
+    label="Password"
+    required
+    minLength={8}
+  />
+  <Button type="submit" variant="primary">
+    Login
+  </Button>
+</form>
+```
+
+### Example 3: Configure Theme
+```
+"Set up a dark theme with blue primary color"
+```
+
+Result:
+```jsx
+<ThemeProvider
+  theme={{
+    mode: "dark",
+    colors: {
+      primary: "#3b82f6",
+      secondary: "#64748b"
     }
-  }
-}
+  }}
+>
+  {children}
+</ThemeProvider>
 ```
 
-Resources:
-- Cursor docs on MCP: https://cursor-docs.apidog.io/model-context-protocol-896302m0
-- Official MCP: https://modelcontextprotocol.io
+## 📚 Alternative: Claude Desktop
 
-## Features
+While this server is optimized for Cursor, it also works with Claude Desktop:
 
-### 🎨 Component Generation
-- Generate any its-just-ui component with custom props
-- Create component compositions
-- Support for all 36+ components in the library
-
-### 🎭 Theme Management
-- Configure light/dark themes
-- Customize colors, typography, and spacing
-- Generate theme configurations
-- Create responsive themes
-
-### 🛠️ Utility Tools
-- Generate Tailwind CSS utility classes
-- Create responsive layouts
-- Build form structures with validation
-- Generate common UI patterns
-
-### 📚 Documentation Tools
-- Get component documentation and examples
-- Check accessibility features
-- View prop descriptions and TypeScript types
-- Access usage guidelines
-
-## Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/its-just-ui/its-just-mcp.git
-cd its-just-mcp
-
-# Install dependencies
-npm install
-
-# Build the server
-npm run build
-```
-
-### Run directly (CLI)
-
-```bash
-# After build
-npm start
-
-# Or run the dev server
-npm run dev
-
-# Or execute the built CLI directly
-node dist/index.js
-```
-
-## Configuration
-
-### For Claude Desktop
-
-Add the following to your Claude Desktop configuration file:
-
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
 **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
     "its-just-ui": {
-      "command": "node",
-      "args": ["/path/to/its-just-mcp/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "its-just-mcp"],
       "env": {}
-    }
-  }
-}
-```
-
-### For Other MCP Clients
-
-```bash
-# Run the server directly
-npm start
-
-# Or in development mode
-npm run dev
-```
-
-## Available Tools
-
-Below is a quick reference. See sections further down for input shapes and examples.
-
-- `generate_component`: Generate JSX for an its-just-ui component
-- `list_components`: List available components by category
-- `compose_components`: Compose multiple components with a layout wrapper
-- `configure_theme`: Create a `ThemeProvider` snippet with custom theme options
-- `generate_tailwind_classes`: Generate Tailwind utility class maps
-- `create_responsive_layout`: Return common responsive layout snippets
-- `create_form`: Build a React form using its-just-ui components (+optional validation)
-- `get_component_docs`: Markdown documentation for usage/props/examples
-- `check_accessibility`: Accessibility summary and checklist
-
-### Component Generation
-
-#### `generate_component`
-Generate an its-just-ui component with specified props and styling.
-
-```typescript
-{
-  component: "Button",
-  props: {
-    variant: "primary",
-    size: "lg"
-  },
-  children: "Click Me",
-  className: "mt-4"
-}
-```
-
-#### `list_components`
-List available components by category.
-
-```typescript
-{
-  category: "form" // Options: all, core, navigation, form, data-display, feedback, layout
-}
-```
-
-#### `compose_components`
-Create a composition of multiple components.
-
-```typescript
-{
-  components: [
-    { type: "Card", props: { variant: "elevated" }, children: "Card 1" },
-    { type: "Button", props: { variant: "primary" }, children: "Action" }
-  ],
-  layout: "vertical" // Options: vertical, horizontal, grid
-}
-```
-
-### Theme Management
-
-#### `configure_theme`
-Configure theme settings including colors and typography.
-
-```typescript
-{
-  mode: "dark",
-  colors: {
-    primary: "#3b82f6",
-    secondary: "#64748b"
-  },
-  borderRadius: "0.5rem",
-  fontFamily: "Inter, sans-serif"
-}
-```
-
-### Utility Tools
-
-#### `generate_tailwind_classes`
-Generate Tailwind utility classes for specific use cases.
-
-```typescript
-{
-  type: "spacing", // Options: spacing, colors, typography, layout, effects
-  values: {
-    padding: "p-6",
-    margin: "m-4"
-  }
-}
-```
-
-#### `create_responsive_layout`
-Create responsive layouts using Tailwind CSS.
-
-```typescript
-{
-  type: "grid", // Options: grid, flexbox, container, sidebar, hero, card-grid
-  breakpoints: {
-    sm: "640px",
-    md: "768px",
-    lg: "1024px"
-  }
-}
-```
-
-#### `create_form`
-Generate form structures using its-just-ui components.
-
-```typescript
-{
-  fields: [
-    {
-      name: "email",
-      type: "email",
-      label: "Email Address",
-      required: true,
-      placeholder: "Enter your email"
-    },
-    {
-      name: "password",
-      type: "password",
-      label: "Password",
-      required: true
-    }
-  ],
-  layout: "single-column", // Options: single-column, two-column, inline
-  includeValidation: true
-}
-```
-
-### Documentation Tools
-
-#### `get_component_docs`
-Get documentation for a specific component.
-
-```typescript
-{
-  component: "Button",
-  section: "props" // Options: usage, props, examples, accessibility
-}
-```
-
-#### `check_accessibility`
-Get accessibility features and ARIA attributes for a component.
-
-```typescript
-{
-  component: "Dialog"
-}
-```
-
-## Usage Examples
-
-### Generate a Button Component
-```javascript
-// Request
-{
-  "tool": "generate_component",
-  "arguments": {
-    "component": "Button",
-    "props": {
-      "variant": "primary",
-      "size": "lg",
-      "loading": false
-    },
-    "children": "Get Started"
-  }
-}
-
-// Response
-<Button variant="primary" size="lg" loading={false}>
-  Get Started
-</Button>
-```
-
-### Create a Login Form
-```javascript
-// Request
-{
-  "tool": "create_form",
-  "arguments": {
-    "fields": [
-      {
-        "name": "email",
-        "type": "email",
-        "label": "Email",
-        "required": true
-      },
-      {
-        "name": "password",
-        "type": "password",
-        "label": "Password",
-        "required": true
-      },
-      {
-        "name": "remember",
-        "type": "checkbox",
-        "label": "Remember me"
-      }
-    ],
-    "layout": "single-column",
-    "includeValidation": true
-  }
-}
-```
-
-### Configure Dark Theme
-```javascript
-// Request
-{
-  "tool": "configure_theme",
-  "arguments": {
-    "mode": "dark",
-    "colors": {
-      "primary": "#3b82f6",
-      "secondary": "#64748b",
-      "success": "#10b981",
-      "error": "#ef4444"
     }
   }
 }
@@ -451,14 +302,41 @@ For issues or questions, please open an issue on GitHub or contact the maintaine
 
 ## Related Links
 
+- [Cursor IDE](https://www.cursor.com) - The AI-first code editor
+- [Cursor MCP Documentation](https://cursor-docs.apidog.io/model-context-protocol)
 - [its-just-ui Library](https://github.com/its-just-ui/its-just-ui)
 - [its-just-ui on npm](https://www.npmjs.com/package/its-just-ui)
 - [MCP SDK Documentation](https://modelcontextprotocol.io)
-- [Claude Desktop](https://claude.ai)
 
 ## Troubleshooting
 
-- **Cursor can’t find the server**: Ensure `dist/index.js` exists (`npm run build`) and the absolute path in `.cursor/mcp.json` is correct.
-- **Tool not listed**: Restart Cursor, confirm `.cursor/mcp.json` or `~/.cursor/mcp.json` is valid JSON, and that `src/index.ts` lists tools in `ListToolsRequestSchema` handler.
-- **Node version issues**: Use Node 18+ (`nvm use 18`), per the `engines` field.
-- **Outputs look unsafe**: Generated snippets are plain strings meant to paste into your app. If you need stricter sanitization, wire `utils/validation.ts` into your own pipeline before rendering.
+### Cursor-Specific Issues
+
+| Issue | Solution |
+|-------|----------|
+| **MCP tools not available** | 1. Restart Cursor<br>2. Check `.cursor/mcp.json` is valid JSON<br>3. Verify the server path is correct |
+| **"Command not found: npx"** | Install Node.js 18+ and npm |
+| **Server not responding** | 1. Check Cursor Console (View → Output → MCP)<br>2. Try local installation instead of npx |
+| **Tools not showing in AI** | Ask "What MCP tools are available?" to refresh |
+
+### Common Fixes
+
+```bash
+# Verify Node version (needs 18+)
+node --version
+
+# For local development, rebuild
+cd /path/to/its-just-mcp
+npm run build
+
+# Check MCP config is valid JSON
+cat .cursor/mcp.json | jq .
+
+# Clear npm cache if npx fails
+npm cache clean --force
+```
+
+### Getting Help
+- Check Cursor Console: `View → Output → MCP`
+- Cursor MCP Docs: https://cursor-docs.apidog.io/model-context-protocol
+- Open an issue: https://github.com/its-just-ui/its-just-mcp/issues
